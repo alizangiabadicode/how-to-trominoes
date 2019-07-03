@@ -165,6 +165,7 @@ namespace howto_trominoes
                     0, SquaresPerSide - 1,
                     0, SquaresPerSide - 1,
                     MissingX, MissingY);
+                findcoloring();
                 var date2 = DateTime.Now;
                 zaman.Text = (date2 - date1).TotalMilliseconds.ToString() + "ms";
 
@@ -337,47 +338,34 @@ namespace howto_trominoes
                     imissing, jmissing))
                 {
                     case Quadrants.NW:
-                        // Make the chair in the middle.
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid, jmid));
-
-                        // Recurse.
-                        SolveBoard(imin, imid, jmin, jmid, imissing, jmissing);         // NW
-                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         // NE
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); // SE
-                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         // SW
+                        SolveBoard(imin, imid, jmin, jmid, imissing, jmissing);         
+                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); 
+                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         
                         break;
                     case Quadrants.NE:
-                        // Make the chair in the middle.
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid + 1, jmid));
-
-                        // Recurse.
-                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 // NW
-                        SolveBoard(imid + 1, imax, jmin, jmid, imissing, jmissing);     // NE
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); // SE
-                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         // SW
+                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 
+                        SolveBoard(imid + 1, imax, jmin, jmid, imissing, jmissing);     
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); 
+                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         
                         break;
                     case Quadrants.SE:
-                        // Make the chair in the middle.
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid + 1, jmid + 1));
-
-                        // Recurse.
-                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 // NW
-                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         // NE
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imissing, jmissing); // SE
-                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         // SW
+                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 
+                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imissing, jmissing); 
+                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         
                         break;
                     case Quadrants.SW:
-                        // Make the chair in the middle.
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid, jmid + 1));
-
-                        // Recurse.
-                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 // NW
-                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         // NE
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); // SE
-                        SolveBoard(imin, imid, jmid + 1, jmax, imissing, jmissing);     // SW
+                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 
+                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); 
+                        SolveBoard(imin, imid, jmid + 1, jmax, imissing, jmissing);     
                         break;
                 }
-                findcoloring();
             }
 
 
@@ -701,11 +689,15 @@ namespace howto_trominoes
                 for (int i = 0; i < n - 1; i++)
                 {
                     if (chairs[i].neighbors.Count == 3)
+                    {
                         continue;
+                    }
                     for (int j = i + 1; j < n; j++)
                     {
                         if (chairs[i].neighbors.Count == 3)
+                        {
                             break;
+                        }
                         if (chairs[i].isneigburs(chairs[j]))
                         {
                             s++;
