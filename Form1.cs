@@ -13,12 +13,6 @@ namespace howto_trominoes
 
         static int widthbycheckbox;
 
-        private Brush[] cbrushes =
-        {
-            Brushes.Red,Brushes.Blue,
-            Brushes.Yellow,Brushes.Magenta
-        };
-
         private List<chair> chairs;
         private List<PointF[]> Chairs;
 
@@ -44,10 +38,7 @@ namespace howto_trominoes
         private void Form1_Load(object sender, EventArgs e)
         {
             SquareWidth = widthbycheckbox;
-            var date1 = DateTime.Now;
             MakeBoard();
-            var date2 = DateTime.Now;
-            zaman.Text = (date2 - date1).Milliseconds.ToString() + "ms";
         }
 
         private void btnTile_Click(object sender, EventArgs e)
@@ -61,8 +52,6 @@ namespace howto_trominoes
         {
             SquareWidth = widthbycheckbox;
             var date1 = DateTime.Now;
-            
-
             if (!color.Checked)
             {
                 int n = int.Parse(txtN.Text);
@@ -113,8 +102,7 @@ namespace howto_trominoes
                 zaman.Text = (date2 - date1).TotalMilliseconds.ToString() + "ms";
 
                 if (!justgenerate.Checked)
-                method();
-                //picBoard.Refresh();
+                    method();
             }
             else
             {
@@ -168,24 +156,27 @@ namespace howto_trominoes
                 findcoloring();
                 var date2 = DateTime.Now;
                 zaman.Text = (date2 - date1).TotalMilliseconds.ToString() + "ms";
-
                 if (!justgenerate.Checked)
-                method();
-                //picBoard.Refresh();
-
+                    method();
             }
-
         }
-
         public void method()
         {
             Bitmap bt = new Bitmap((int)BoardWidth, (int)(BoardWidth));
             using (Graphics g = Graphics.FromImage(bt))
             {
+                Random rnd = new Random();
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 if (color.Checked)
                 {
-                    if (rndcolor.Checked)
+                    if (tavakol.Checked)
+                    {
+                        foreach (chair c in chairs)
+                        {
+                            c.draw(g, true, rnd);
+                        }
+                    }
+                    else if (rndcolor.Checked)
                     {
                         foreach (chair c in chairs)
                             c.draw(g, true, c.cc);
@@ -193,7 +184,7 @@ namespace howto_trominoes
                     else
                     {
                         foreach (chair c in chairs)
-                            c.draw(g, true);
+                            c.draw(g, true, rnd);
 
                     }
                     float x = MissingX * SquareWidth;
@@ -224,10 +215,7 @@ namespace howto_trominoes
             @null = false;
             clickedx = e.X;
             clickedy = e.Y;
-            var date1 = DateTime.Now;
             MakeBoard();
-            var date2 = DateTime.Now;
-            zaman.Text = (date2 - date1).Milliseconds.ToString() + "ms";
         }
 
 
@@ -273,10 +261,7 @@ namespace howto_trominoes
 
         private void checkBox4_Click(object sender, EventArgs e)
         {
-            var date1 = DateTime.Now;
             MakeBoard();
-            var date2 = DateTime.Now;
-            zaman.Text = (date2 - date1).Milliseconds.ToString() + "ms";
         }
 
         private void SolveBoard(int imin, int imax, int jmin, int jmax, int imissing, int jmissing)
@@ -339,41 +324,37 @@ namespace howto_trominoes
                 {
                     case Quadrants.NW:
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid, jmid));
-                        SolveBoard(imin, imid, jmin, jmid, imissing, jmissing);         
-                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); 
-                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         
+                        SolveBoard(imin, imid, jmin, jmid, imissing, jmissing);
+                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1);
+                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);
                         break;
                     case Quadrants.NE:
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid + 1, jmid));
-                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 
-                        SolveBoard(imid + 1, imax, jmin, jmid, imissing, jmissing);     
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); 
-                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         
+                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);
+                        SolveBoard(imid + 1, imax, jmin, jmid, imissing, jmissing);
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1);
+                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);
                         break;
                     case Quadrants.SE:
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid + 1, jmid + 1));
-                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 
-                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imissing, jmissing); 
-                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);         
+                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);
+                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imissing, jmissing);
+                        SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);
                         break;
                     case Quadrants.SW:
                         chairs.Add(MakeChaircolor(imid, imid + 1, jmid, jmid + 1, imid, jmid + 1));
-                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);                 
-                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);         
-                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1); 
-                        SolveBoard(imin, imid, jmid + 1, jmax, imissing, jmissing);     
+                        SolveBoard(imin, imid, jmin, jmid, imid, jmid);
+                        SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);
+                        SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1);
+                        SolveBoard(imin, imid, jmid + 1, jmax, imissing, jmissing);
                         break;
                 }
             }
 
 
         }
-
-
-
-
         private PointF[] MakeChair(int imin, int imax, int jmin, int jmax, int imissing, int jmissing)
         {
             float xmin = Xmin + imin * SquareWidth;
@@ -417,11 +398,8 @@ namespace howto_trominoes
 
         private chair MakeChaircolor(int imin, int imax, int jmin, int jmax, int imissing, int jmissing)
         {
-            // Make the Chair.
             chair chair = new chair();
             chair.number = chairs.Count;
-
-            // Make the initial points.
             float xmin = Xmin + imin * SquareWidth;
             float ymin = Ymin + jmin * SquareWidth;
             PointF[] points =
@@ -435,8 +413,6 @@ namespace howto_trominoes
                 new PointF(xmin, ymin + SquareWidth * 2),
                 new PointF(xmin, ymin + SquareWidth),
             };
-
-            // Push in the appropriate corner.
             PointF middle = new PointF(
                 xmin + SquareWidth,
                 ymin + SquareWidth);
@@ -469,16 +445,16 @@ namespace howto_trominoes
                     break;
             }
 
-            // Add the points to the Chair and return it.
             chair.points = points;
             return chair;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Bitmap bt = new Bitmap((int)BoardWidth, (int)(BoardWidth));
+            Bitmap bt = null;
             if (!color.Checked)
             {
+                bt = new Bitmap((int)BoardWidth, (int)(BoardWidth));
                 using (Graphics g = Graphics.FromImage(bt))
                 {
                     g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -487,8 +463,6 @@ namespace howto_trominoes
                     {
                         g.DrawPolygon(Pens.White, p);
                     }
-
-
                     float x = MissingX * SquareWidth;
                     float y = MissingY * SquareWidth;
                     g.FillRectangle(Brushes.Green, x, y, SquareWidth, SquareWidth);
@@ -496,37 +470,25 @@ namespace howto_trominoes
             }
             else
             {
-                bt = new Bitmap((int)BoardWidth, (int)(BoardWidth));
-                using (Graphics g = Graphics.FromImage(bt))
+                bt = new Bitmap(picBoard.Image);
+            }
+            DialogResult res;
+            string path;
+            using (SaveFileDialog s = new SaveFileDialog())
+            {
+                s.CheckFileExists = false;
+                s.CheckPathExists = true;
+                res = s.ShowDialog();
+                path = s.FileName;
+            }
+            if (res == DialogResult.OK)
+            {
+                using (FileStream fs = new FileStream(path+".png", FileMode.Create))
                 {
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    if (color.Checked)
-                    {
-                        foreach (chair c in chairs)
-                            c.draw(g, true);
-                        float x = MissingX * SquareWidth;
-                        float y = MissingY * SquareWidth;
-                        g.FillRectangle(Brushes.White, x, y, SquareWidth, SquareWidth);
-                    }
-                }
-
-                DialogResult res;
-                string path;
-                using (SaveFileDialog s = new SaveFileDialog())
-                {
-                    s.CheckFileExists = false;
-                    s.CheckPathExists = true;
-                    res = s.ShowDialog();
-                    path = s.FileName;
-                }
-                if (res == DialogResult.OK)
-                {
-                    using (FileStream fs = new FileStream(path, FileMode.Create))
-                    {
-                        fs.Write(converterDemo(bt), 0, converterDemo(bt).Length);
-                    }
+                    fs.Write(converterDemo(bt), 0, converterDemo(bt).Length);
                 }
             }
+
         }
         public static byte[] converterDemo(Image x)
         {
@@ -539,7 +501,7 @@ namespace howto_trominoes
         {
             if (auto.Checked)
             {
-               // widthbycheckbox = 12;
+                // widthbycheckbox = 12;
                 checkboxchagned(auto);
             }
             else
@@ -548,7 +510,6 @@ namespace howto_trominoes
             }
 
         }
-
         private void checkBox4_Click_2(object sender, EventArgs e)
         {
             if (checkBox4.Checked)
@@ -563,118 +524,53 @@ namespace howto_trominoes
 
         }
 
-        private void rndcolor_Click(object sender, EventArgs e)
-        {
-            if (rndcolor.Checked)
-            {
-                rnd = new Random();
-            }
-        }
-
-   /*     void findneigbur2(int imin,int imax,int jmin,int jmax,int iff,int jff)
-        {
-            if (imax - imin == 3)
-            {
-                var c = chairs[0];
-                for (int i = 1; i < 4; i++)
-                {
-                    c.neighbors.Add(chairs[c.number + i]);
-                }
-                return;
-            }
-            int imid = (imin + imax) / 2;
-            int jmid = (jmin + jmax) / 2;
-            switch (QuadrantToIgnore(imin, imax, jmin, jmax, imissing, jmissing))
-            {
-                case Quadrants.NW:
-                    Chairs.Add(MakeChair(imid, imid + 1, jmid, jmid + 1, imid, jmid));
-                    SolveBoard(imin, imid, jmin, jmid, imissing, jmissing);
-                    SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);
-                    SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1);
-                    SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);
-                    break;
-                case Quadrants.NE:
-                    Chairs.Add(MakeChair(imid, imid + 1, jmid, jmid + 1, imid + 1, jmid));
-                    SolveBoard(imin, imid, jmin, jmid, imid, jmid);
-                    SolveBoard(imid + 1, imax, jmin, jmid, imissing, jmissing);
-                    SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1);
-                    SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);
-                    break;
-                case Quadrants.SE:
-                    Chairs.Add(MakeChair(imid, imid + 1, jmid, jmid + 1, imid + 1, jmid + 1));
-                    SolveBoard(imin, imid, jmin, jmid, imid, jmid);
-                    SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);
-                    SolveBoard(imid + 1, imax, jmid + 1, jmax, imissing, jmissing);
-                    SolveBoard(imin, imid, jmid + 1, jmax, imid, jmid + 1);
-                    break;
-                case Quadrants.SW:
-                    Chairs.Add(MakeChair(imid, imid + 1, jmid, jmid + 1, imid, jmid + 1));
-                    SolveBoard(imin, imid, jmin, jmid, imid, jmid);
-                    SolveBoard(imid + 1, imax, jmin, jmid, imid + 1, jmid);
-                    SolveBoard(imid + 1, imax, jmid + 1, jmax, imid + 1, jmid + 1);
-                    SolveBoard(imin, imid, jmid + 1, jmax, imissing, jmissing);
-                    break;
-            }
-
-        }*/
-
-
         private void findcoloring()
         {
-            findneigburs();
-            
+            if (!tavakol.Checked)
+                findneigburs();
+
             foreach (chair c in chairs)
             {
                 c.bgbrushnum = -1;
             }
-
-            if (!findcoloring(0))
+            if (!tavakol.Checked)
             {
-                MessageBox.Show("rang nmishe lamasab");
-            }
-        }
-
-        private bool findcoloring(int s)
-        {
-            if (s == chairs.Count)
-            {
-                return true;
-            }
-
-            int n = chair.brushes.Length;
-            chair current = chairs[s];
-            if (rndcolor.Checked)
-            {
-                current.cc = Color.FromArgb(rnd.Next(255), rnd.Next(255), rnd.Next(255));
-                if (current.colorAllowedcolor(current.cc))
+                int n = chair.brushes.Length;
+                if (rndcolor.Checked)
                 {
-                    if (findcoloring(s + 1))
+
+
+                    for (int i = 0; i < chairs.Count; i++)
                     {
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                for (int cnum = 0; cnum < n; cnum++)
-                {
-                    if (current.colorallowd(cnum))
-                    {
-                        current.bgbrushnum = cnum;
-                        if (findcoloring(s + 1))
+                        var color = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+                        if (chairs[i].colorAllowedcolor(color))
                         {
-                            return true;
+                            chairs[i].cc = color;
+                        }
+                        else
+                        {
+                            i--;
                         }
                     }
                 }
+                else
+                {
+                    for (int i = 0; i < chairs.Count; i++)
+                    {
+                        var color = rnd.Next(4);
+                        if (chairs[i].colorallowd(color))
+                        {
+                            chairs[i].bgbrushnum = color;
+                        }
+                        else
+                        {
+                            i--;
+                        }
+                    }
+                }
+
             }
-
-            current.bgbrushnum = -1;
-            return false;
         }
-
-
-
         private void findneigburs()
         {
             int n = chairs.Count;
@@ -682,50 +578,18 @@ namespace howto_trominoes
             {
                 c.neighbors = new List<chair>();
             }
-            //method2(0, SquaresPerSide - 1, 0, SquaresPerSide - 1, MissingX, MissingY);
-            int s = 0;
-            if (rndcolor.Checked)
+            for (int i = 0; i < n - 1; i++)
             {
-                for (int i = 0; i < n - 1; i++)
+                for (int j = i + 1; j < n; j++)
                 {
-                    if (chairs[i].neighbors.Count == 3)
+                    if (chairs[i].isneigburs(chairs[j]))
                     {
-                        continue;
-                    }
-                    for (int j = i + 1; j < n; j++)
-                    {
-                        if (chairs[i].neighbors.Count == 3)
-                        {
-                            break;
-                        }
-                        if (chairs[i].isneigburs(chairs[j]))
-                        {
-                            s++;
-                            chairs[i].neighbors.Add(chairs[j]);
-                            chairs[j].neighbors.Add(chairs[i]);
-                            if (s == 3)
-                            {
-                                s = 0; break;
-                            }
-                        }
+                        chairs[i].neighbors.Add(chairs[j]);
+                        chairs[j].neighbors.Add(chairs[i]);
                     }
                 }
             }
-            else
-            {
-                for (int i = 0; i < n - 1; i++)
-                {
-                    for (int j = i + 1; j < n; j++)
-                    {
-                        if (chairs[i].isneigburs(chairs[j]))
-                        {
-                            chairs[i].neighbors.Add(chairs[j]);
-                            chairs[j].neighbors.Add(chairs[i]);
-                        }
-                    }
-                }
 
-            }
         }
 
         public void checkboxchagned(CheckBox cc)
@@ -768,11 +632,18 @@ namespace howto_trominoes
 
 
 
+
+
+
+
+
+
+
     public class chair
     {
         public static Brush[] brushes =
         {
-        Brushes.Red,Brushes.Blue,Brushes.Yellow
+        Brushes.Green,Brushes.Yellow,Brushes.Orange,Brushes.DimGray
     };
         public Color cc;
         public int number;
@@ -781,16 +652,15 @@ namespace howto_trominoes
         public PointF[] points;
         public List<chair> neighbors;
 
-
-        public void draw(Graphics g, bool b)
+        public void draw(Graphics g, bool b, Color c)
         {
             if (points == null)
             {
                 return;
             }
 
-
-            g.FillPolygon(brushes[bgbrushnum], points);
+            var bb = new SolidBrush(c);
+            g.FillPolygon(bb, points);
             g.DrawPolygon(Pens.Black, points);
 
             if (b)
@@ -807,15 +677,37 @@ namespace howto_trominoes
             }
         }
 
-        public void draw(Graphics g, bool b, Color c)
+        public void draw(Graphics g, bool b, Random rnd)
         {
             if (points == null)
             {
                 return;
             }
-
-            var bb = new SolidBrush(c);
+            var bb = new SolidBrush(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
             g.FillPolygon(bb, points);
+            g.DrawPolygon(Pens.Black, points);
+
+            if (b)
+            {
+                using (Font font = new Font("Times New Roman", 10))
+                {
+                    using (StringFormat sf = new StringFormat())
+                    {
+                        sf.Alignment = StringAlignment.Center;
+                        sf.LineAlignment = StringAlignment.Center;
+                        g.DrawString(number.ToString(), font, Brushes.Black, center(), sf);
+                    }
+                }
+            }
+        }
+
+        public void draw(Graphics g, bool b)
+        {
+            if (points == null)
+            {
+                return;
+            }
+            g.FillPolygon(brushes[bgbrushnum], points);
             g.DrawPolygon(Pens.Black, points);
 
             if (b)
@@ -905,18 +797,3 @@ namespace howto_trominoes
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
