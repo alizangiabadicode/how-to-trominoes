@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace howto_trominoes
 {
-    public partial class Form1 : Form
+    public partial class Form1 : MaterialSkin.Controls.MaterialForm
     {
         static Random rnd = new Random();
 
@@ -48,7 +51,7 @@ namespace howto_trominoes
 
 
 
-        private void MakeBoard()
+        private async void MakeBoard()
         {
             SquareWidth = widthbycheckbox;
             var date1 = DateTime.Now;
@@ -102,7 +105,10 @@ namespace howto_trominoes
                 zaman.Text = (date2 - date1).TotalMilliseconds.ToString() + "ms";
 
                 if (!justgenerate.Checked)
-                    method();
+                {
+                    Task t = Task.Run(() => method());
+                    await Task.WhenAll(t);
+                }
             }
             else
             {
@@ -153,14 +159,19 @@ namespace howto_trominoes
                     0, SquaresPerSide - 1,
                     0, SquaresPerSide - 1,
                     MissingX, MissingY);
-                findcoloring();
+                
+                Task tt = Task.Run(() => findcoloring());
+                await Task.WhenAll(tt);
                 var date2 = DateTime.Now;
                 zaman.Text = (date2 - date1).TotalMilliseconds.ToString() + "ms";
                 if (!justgenerate.Checked)
-                    method();
+                {
+                    Task t = Task.Run(() => method());
+                    await Task.WhenAll(t);
+                }
             }
         }
-        public void method()
+        public async Task method()
         {
             Bitmap bt = new Bitmap((int)BoardWidth, (int)(BoardWidth));
             using (Graphics g = Graphics.FromImage(bt))
@@ -173,18 +184,62 @@ namespace howto_trominoes
                     {
                         foreach (chair c in chairs)
                         {
-                            c.draw(g, true, rnd);
+                            c.draw(g, shomare.Checked, rnd);
+                            if (slowmotion.Checked)
+                            {
+                                await Task.Delay(500);
+                                c.draw(g, shomare.Checked, rnd);
+                                Invoke(new MethodInvoker(() =>
+                                {
+                                    picBoard.Image = bt;
+                                }));
+                            }
+                            else
+                            {
+                                c.draw(g, shomare.Checked, rnd);
+                            }
+
                         }
                     }
                     else if (rndcolor.Checked)
                     {
                         foreach (chair c in chairs)
-                            c.draw(g, true, c.cc);
+                        {
+                            if (slowmotion.Checked)
+                            {
+                                await Task.Delay(500);
+                                c.draw(g, shomare.Checked, c.cc);
+                                Invoke(new MethodInvoker(() =>
+                                {
+                                    picBoard.Image = bt;
+                                }));
+                            }
+                            else
+                            {
+                                c.draw(g, shomare.Checked, c.cc);
+                            }
+                        }
                     }
                     else
                     {
                         foreach (chair c in chairs)
-                            c.draw(g, true, rnd);
+                        {
+                            if (slowmotion.Checked)
+                            {
+                                await Task.Delay(500);
+                                c.draw(g, shomare.Checked);
+                                Invoke(new MethodInvoker(() =>
+                                {
+                                    picBoard.Image = bt;
+                                }));
+                            }
+                            else
+                            {
+                                c.draw(g, shomare.Checked);
+                            }
+
+                        }
+                        //c.draw(g, shomare.Checked, rnd);
 
                     }
                     float x = MissingX * SquareWidth;
@@ -195,6 +250,15 @@ namespace howto_trominoes
                 {
                     foreach (PointF[] p in Chairs)
                     {
+                        if (slowmotion.Checked)
+                        {
+                            await Task.Delay(500);
+                            Invoke(new MethodInvoker(() =>
+                            {
+                                picBoard.Image = bt;
+                            }));
+
+                        }
                         g.DrawPolygon(Pens.Black, p);
                     }
                     float x = MissingX * SquareWidth;
@@ -202,7 +266,13 @@ namespace howto_trominoes
                     g.FillRectangle(Brushes.Green, x, y, SquareWidth, SquareWidth);
                 }
             }
-            picBoard.Image = bt;
+            if (!slowmotion.Checked)
+            {
+                Invoke(new MethodInvoker(() =>
+                {
+                    picBoard.Image = bt;
+                }));
+            }
 
         }
 
@@ -526,50 +596,47 @@ namespace howto_trominoes
 
         private void findcoloring()
         {
-            if (!tavakol.Checked)
-                findneigburs();
+            try
+            {
+                if (!tavakol.Checked)
+                    findneigburs();
 
-            foreach (chair c in chairs)
-            {
-                c.bgbrushnum = -1;
-            }
-            if (!tavakol.Checked)
-            {
-                int n = chair.brushes.Length;
-                if (rndcolor.Checked)
+                foreach (chair c in chairs)
                 {
-
-
-                    for (int i = 0; i < chairs.Count; i++)
+                    c.bgbrushnum = -1;
+                }
+                if (!tavakol.Checked)
+                {
+                    int n = chair.brushes.Length;
+                    if (rndcolor.Checked)
                     {
-                        var color = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
-                        if (chairs[i].colorAllowedcolor(color))
+
+
+                        for (int i = 0; i < chairs.Count; i++)
                         {
-                            chairs[i].cc = color;
-                        }
-                        else
-                        {
-                            i--;
+                            var color = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+                            if (chairs[i].colorAllowedcolor(color))
+                            {
+                                chairs[i].cc = color;
+                            }
+                            else
+                            {
+                                i--;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    for (int i = 0; i < chairs.Count; i++)
+                    else
                     {
-                        var color = rnd.Next(4);
-                        if (chairs[i].colorallowd(color))
+                        for (int i = 0; i < chairs.Count; i++)
                         {
-                            chairs[i].bgbrushnum = color;
-                        }
-                        else
-                        {
-                            i--;
+                            chairs[i].bgbrushnum = chairs[i].giveTheRightColor();
                         }
                     }
-                }
 
+                }
             }
+            catch (Exception)
+            {            }
         }
         private void findneigburs()
         {
@@ -580,12 +647,25 @@ namespace howto_trominoes
             }
             for (int i = 0; i < n - 1; i++)
             {
+                if (chairs[i].neighbors.Count == 6)
+                {
+                    continue;
+                }
                 for (int j = i + 1; j < n; j++)
                 {
+                    if (chairs[i].neighbors.Count == 6)
+                    {
+                        break;
+                    }
+
                     if (chairs[i].isneigburs(chairs[j]))
                     {
                         chairs[i].neighbors.Add(chairs[j]);
                         chairs[j].neighbors.Add(chairs[i]);
+                        if (chairs[i].neighbors.Count == 6)
+                        {
+                            break;
+                        }
                     }
                 }
             }
@@ -734,7 +814,7 @@ namespace howto_trominoes
                 x += p.X;
                 y += p.Y;
             }
-            return new PointF(x / points.Length, y / points.Length);// nmifmmesh!
+            return new PointF(x / points.Length, y / points.Length);
         }
 
 
@@ -769,9 +849,9 @@ namespace howto_trominoes
 
 
 
-
         public bool colorallowd(int num)
         {
+
             foreach (chair c in neighbors)
             {
                 if (c.bgbrushnum == num)
@@ -782,7 +862,21 @@ namespace howto_trominoes
             return true;
         }
 
+        static Random rnd = new Random();
 
+        public int giveTheRightColor()
+        {       List<int> color = new List<int>() { 0, 1, 2, 3 };
+
+            foreach (chair i in neighbors)
+            {
+                if (i.bgbrushnum != -1)
+                    color.Remove(i.bgbrushnum);
+            }
+            return color.Last();
+            //return color[rnd.Next(color.Count);
+
+
+        }
         public bool colorAllowedcolor(Color c)
         {
             foreach (chair i in neighbors)

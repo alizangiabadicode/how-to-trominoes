@@ -48,6 +48,8 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.auto = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.shomare = new System.Windows.Forms.CheckBox();
+            this.slowmotion = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).BeginInit();
             this.panel3.SuspendLayout();
@@ -58,7 +60,8 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(953, 31);
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(980, 81);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(18, 13);
             this.label1.TabIndex = 0;
@@ -66,7 +69,8 @@
             // 
             // txtN
             // 
-            this.txtN.Location = new System.Drawing.Point(977, 28);
+            this.txtN.BackColor = System.Drawing.Color.White;
+            this.txtN.Location = new System.Drawing.Point(927, 78);
             this.txtN.Name = "txtN";
             this.txtN.Size = new System.Drawing.Size(47, 20);
             this.txtN.TabIndex = 1;
@@ -75,30 +79,32 @@
             // 
             // btnTile
             // 
-            this.btnTile.Location = new System.Drawing.Point(968, 54);
+            this.btnTile.BackColor = System.Drawing.Color.White;
+            this.btnTile.Location = new System.Drawing.Point(936, 124);
             this.btnTile.Name = "btnTile";
             this.btnTile.Size = new System.Drawing.Size(75, 23);
             this.btnTile.TabIndex = 2;
-            this.btnTile.Text = "Tile";
-            this.btnTile.UseVisualStyleBackColor = true;
+            this.btnTile.Text = "کاشی کن!";
+            this.btnTile.UseVisualStyleBackColor = false;
             this.btnTile.Click += new System.EventHandler(this.btnTile_Click);
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.picBoard);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(12, 74);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(906, 551);
+            this.panel1.Size = new System.Drawing.Size(906, 489);
             this.panel1.TabIndex = 5;
             // 
             // picBoard
             // 
             this.picBoard.BackColor = System.Drawing.Color.White;
             this.picBoard.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.picBoard.Location = new System.Drawing.Point(30, 42);
+            this.picBoard.Location = new System.Drawing.Point(259, 50);
             this.picBoard.Name = "picBoard";
-            this.picBoard.Size = new System.Drawing.Size(863, 405);
+            this.picBoard.Size = new System.Drawing.Size(457, 385);
             this.picBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picBoard.TabIndex = 4;
             this.picBoard.TabStop = false;
@@ -108,20 +114,22 @@
             // color
             // 
             this.color.AutoSize = true;
+            this.color.BackColor = System.Drawing.Color.White;
             this.color.Checked = true;
             this.color.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.color.Location = new System.Drawing.Point(1016, 252);
+            this.color.Location = new System.Drawing.Point(1009, 331);
             this.color.Name = "color";
-            this.color.Size = new System.Drawing.Size(60, 17);
+            this.color.Size = new System.Drawing.Size(72, 17);
             this.color.TabIndex = 6;
-            this.color.Text = "color it!";
-            this.color.UseVisualStyleBackColor = true;
+            this.color.Text = "رنگ امیزی";
+            this.color.UseVisualStyleBackColor = false;
             this.color.Click += new System.EventHandler(this.checkBox4_Click);
             // 
             // zaman
             // 
+            this.zaman.BackColor = System.Drawing.Color.White;
             this.zaman.Enabled = false;
-            this.zaman.Location = new System.Drawing.Point(1076, 28);
+            this.zaman.Location = new System.Drawing.Point(1024, 78);
             this.zaman.Name = "zaman";
             this.zaman.Size = new System.Drawing.Size(100, 20);
             this.zaman.TabIndex = 7;
@@ -129,53 +137,58 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1035, 31);
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(1127, 81);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.Size = new System.Drawing.Size(49, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "zaman:";
+            this.label2.Text = "مدت زمان";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1076, 54);
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(1028, 124);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "zakhire";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Text = "ذخیره";
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // justgenerate
             // 
             this.justgenerate.AutoSize = true;
-            this.justgenerate.Location = new System.Drawing.Point(1018, 291);
+            this.justgenerate.BackColor = System.Drawing.Color.White;
+            this.justgenerate.Location = new System.Drawing.Point(1011, 370);
             this.justgenerate.Name = "justgenerate";
-            this.justgenerate.Size = new System.Drawing.Size(87, 17);
+            this.justgenerate.Size = new System.Drawing.Size(118, 17);
             this.justgenerate.TabIndex = 9;
-            this.justgenerate.Text = "just generate";
-            this.justgenerate.UseVisualStyleBackColor = true;
+            this.justgenerate.Text = "صرفا منطق عمل کند";
+            this.justgenerate.UseVisualStyleBackColor = false;
             // 
             // rndcolor
             // 
             this.rndcolor.AutoSize = true;
+            this.rndcolor.BackColor = System.Drawing.Color.White;
             this.rndcolor.Checked = true;
             this.rndcolor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.rndcolor.Location = new System.Drawing.Point(1018, 341);
+            this.rndcolor.Location = new System.Drawing.Point(1011, 420);
             this.rndcolor.Name = "rndcolor";
-            this.rndcolor.Size = new System.Drawing.Size(92, 17);
+            this.rndcolor.Size = new System.Drawing.Size(94, 17);
             this.rndcolor.TabIndex = 0;
-            this.rndcolor.Text = "random colors";
-            this.rndcolor.UseVisualStyleBackColor = true;
+            this.rndcolor.Text = "رنگ امیزی رندم";
+            this.rndcolor.UseVisualStyleBackColor = false;
             // 
             // tavakol
             // 
             this.tavakol.AutoSize = true;
-            this.tavakol.Location = new System.Drawing.Point(1018, 376);
+            this.tavakol.BackColor = System.Drawing.Color.White;
+            this.tavakol.Location = new System.Drawing.Point(1011, 455);
             this.tavakol.Name = "tavakol";
-            this.tavakol.Size = new System.Drawing.Size(103, 17);
+            this.tavakol.Size = new System.Drawing.Size(141, 17);
             this.tavakol.TabIndex = 10;
-            this.tavakol.Text = "tavakol b khoda";
-            this.tavakol.UseVisualStyleBackColor = true;
+            this.tavakol.Text = "رنگ امیزی بدون چک کردن";
+            this.tavakol.UseVisualStyleBackColor = false;
             // 
             // panel3
             // 
@@ -248,6 +261,7 @@
             // auto
             // 
             this.auto.AutoSize = true;
+            this.auto.Enabled = false;
             this.auto.Location = new System.Drawing.Point(42, 3);
             this.auto.Name = "auto";
             this.auto.Size = new System.Drawing.Size(47, 17);
@@ -259,16 +273,39 @@
             // panel2
             // 
             this.panel2.AccessibleName = "paenl2";
+            this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.Controls.Add(this.auto);
             this.panel2.Controls.Add(this.checkBox3);
             this.panel2.Controls.Add(this.checkBox2);
             this.panel2.Controls.Add(this.checkBox4);
             this.panel2.Controls.Add(this.checkBox1);
             this.panel2.Controls.Add(this.panel3);
-            this.panel2.Location = new System.Drawing.Point(977, 129);
+            this.panel2.Location = new System.Drawing.Point(936, 153);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(168, 100);
             this.panel2.TabIndex = 5;
+            // 
+            // shomare
+            // 
+            this.shomare.AutoSize = true;
+            this.shomare.BackColor = System.Drawing.Color.White;
+            this.shomare.Location = new System.Drawing.Point(1009, 288);
+            this.shomare.Name = "shomare";
+            this.shomare.Size = new System.Drawing.Size(55, 17);
+            this.shomare.TabIndex = 11;
+            this.shomare.Text = "شماره";
+            this.shomare.UseVisualStyleBackColor = false;
+            // 
+            // slowmotion
+            // 
+            this.slowmotion.AutoSize = true;
+            this.slowmotion.BackColor = System.Drawing.Color.White;
+            this.slowmotion.Location = new System.Drawing.Point(1009, 495);
+            this.slowmotion.Name = "slowmotion";
+            this.slowmotion.Size = new System.Drawing.Size(81, 17);
+            this.slowmotion.TabIndex = 12;
+            this.slowmotion.Text = "slow motion";
+            this.slowmotion.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
@@ -278,6 +315,8 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1188, 575);
+            this.Controls.Add(this.slowmotion);
+            this.Controls.Add(this.shomare);
             this.Controls.Add(this.tavakol);
             this.Controls.Add(this.justgenerate);
             this.Controls.Add(this.button1);
@@ -292,8 +331,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.ShowIcon = false;
-            this.Text = "howto_trominoes";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Text = "کاشی کاری";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -330,6 +368,8 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox auto;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.CheckBox shomare;
+        private System.Windows.Forms.CheckBox slowmotion;
     }
 }
 
