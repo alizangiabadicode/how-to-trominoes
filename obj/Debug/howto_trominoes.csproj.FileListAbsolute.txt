@@ -39,3 +39,14 @@ D:\tarahi\imagetromino\howto_trominoes\obj\Debug\howto_trominoes.exe
 D:\tarahi\imagetromino\howto_trominoes\obj\Debug\howto_trominoes.pdb
 D:\tarahi\imagetromino\howto_trominoes\bin\Debug\MaterialSkin.dll
 D:\tarahi\imagetromino\howto_trominoes\obj\Debug\howto_trominoes.csproj.CopyComplete
+C:\Users\OverWatch\Desktop\کاشی کاری\obj\Debug\howto_trominoes.csprojAssemblyReference.cache
+C:\Users\OverWatch\Desktop\کاشی کاری\obj\Debug\howto_trominoes.Form1.resources
+C:\Users\OverWatch\Desktop\کاشی کاری\obj\Debug\howto_trominoes.csproj.GenerateResource.cache
+C:\Users\OverWatch\Desktop\کاشی کاری\obj\Debug\howto_trominoes.exe
+C:\Users\OverWatch\Desktop\کاشی کاری\obj\Debug\howto_trominoes.pdb
+C:\Users\OverWatch\Desktop\کاشی کاری\bin\Debug\howto_trominoes.exe.config
+C:\Users\OverWatch\Desktop\کاشی کاری\bin\Debug\howto_trominoes.exe
+C:\Users\OverWatch\Desktop\کاشی کاری\bin\Debug\howto_trominoes.pdb
+C:\Users\OverWatch\Desktop\کاشی کاری\bin\Debug\MaterialSkin.dll
+C:\Users\OverWatch\Desktop\کاشی کاری\obj\Debug\howto_trominoes.csproj.CoreCompileInputs.cache
+C:\Users\OverWatch\Desktop\کاشی کاری\obj\Debug\howto_trominoes.csproj.CopyComplete
